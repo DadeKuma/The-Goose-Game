@@ -27,7 +27,7 @@ public class GooseParsingProcessor implements ParsingProcessor {
         if(input.matches("^move\\s.+")){
             return movePlayer(input, false);
         }
-        throw new CommandNotFoundException();
+        throw new CommandNotFoundException(input);
     }
 
     private GooseCommand addPlayer(String input){
@@ -48,7 +48,7 @@ public class GooseParsingProcessor implements ParsingProcessor {
             //if player didn't explicitly told dice results we stop here
             return new GooseCommand(EnumCommand.MOVING, parameters);
         }
-        //if he did then we extract only the digits from input
+        //if he did, then we extract only the digits from input
         Pattern pattern = Pattern.compile("[0-9]+(,\\s[0-9]+)*");
         Matcher matcher = pattern.matcher(input);
         StringBuilder stringBuilder = new StringBuilder();

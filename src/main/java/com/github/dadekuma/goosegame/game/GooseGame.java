@@ -3,31 +3,44 @@ package com.github.dadekuma.goosegame.game;
 import com.github.dadekuma.goosegame.processing.*;
 import com.github.dadekuma.goosegame.processing.enums.EnumParameter;
 import com.github.dadekuma.goosegame.processing.exception.CommandNotFoundException;
+import com.github.dadekuma.goosegame.processing.exception.ParameterNotFoundException;
+import com.github.dadekuma.goosegame.processing.exception.PlayerNotFoundException;
 
 public class GooseGame {
     private Board board;
     private Dice dice;
     private int diceNumber;
-    private InputOutputProcessor InputOutputProcessor;
+    private InputOutputProcessor inputOutputProcessor;
     private ParsingProcessor parsingProcessor;
-    private boolean isGameFinished;
 
     public GooseGame() {
-        InputOutputProcessor = new ConsoleInputOutputProcessor();
+        inputOutputProcessor = new ConsoleInputOutputProcessor();
         parsingProcessor = new GooseParsingProcessor();
         board = new Board(63);
+        board.addGooseSpaces(5, 9, 14, 18, 23, 27);
+        board.setBridgeSpace(6);
         dice = new Dice(6);
         diceNumber = 2;
     }
 
     //called to start the game, contains the game loop
     public void start(){
-        while (!isGameFinished){
-            String lastInput = InputOutputProcessor.processStringInput();
-            GooseCommand command = parsingProcessor.parseInput(lastInput);
-            String result = executeCommand(command);
-            InputOutputProcessor.processOutput(result);
+        while (!board.isGameFinished()){
+            try {
+                String lastInput = inputOutputProcessor.processStringInput();
+                GooseCommand command = parsingProcessor.parseInput(lastInput);
+                String result = executeCommand(command);
+                inputOutputProcessor.processOutput(result);
+            } catch (PlayerNotFoundException |
+                     CommandNotFoundException |
+                     ParameterNotFoundException e){
+                inputOutputProcessor.processOutput(e.getMessage());
+            } catch (RuntimeException e){
+                e.fillInStackTrace();
+            }
         }
+        inputOutputProcessor.processOutput("Thank you for playing.");
+        inputOutputProcessor.processStringInput();
     }
 
     private String executeCommand(GooseCommand command){
@@ -56,7 +69,7 @@ public class GooseGame {
                 return board.movePlayer(playerName, diceRolls);
             }
             default:
-                throw new CommandNotFoundException();
+                throw new CommandNotFoundException(command.toString());
         }
     }
 }

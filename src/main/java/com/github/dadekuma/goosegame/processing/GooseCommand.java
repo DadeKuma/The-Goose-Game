@@ -40,7 +40,7 @@ public class GooseCommand {
 
     public String getValue(EnumParameter parameterName){
         if(!parameters.containsKey(parameterName))
-            throw new ParameterNotFoundException();
+            throw new ParameterNotFoundException(parameterName.toString());
         return parameters.get(parameterName);
     }
 
