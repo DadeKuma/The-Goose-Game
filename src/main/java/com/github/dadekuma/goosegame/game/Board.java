@@ -9,7 +9,7 @@ public class Board {
     private Collection<Player> players;
     private List<Integer> gooseSpaces;
     private Map<Integer, String> specialSpaceNames;
-    private int bridgeSpace = 12;
+    private int bridgeSpace = 6;
     private boolean isGameFinished;
 
     public Board(int boardSize) {
