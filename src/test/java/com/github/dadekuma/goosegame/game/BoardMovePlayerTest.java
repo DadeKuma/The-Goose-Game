@@ -4,7 +4,6 @@ import com.github.dadekuma.goosegame.processing.exception.PlayerNotFoundExceptio
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
 
 public class BoardMovePlayerTest {
 

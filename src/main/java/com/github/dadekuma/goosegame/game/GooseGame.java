@@ -14,7 +14,7 @@ public class GooseGame {
     private ParsingProcessor parsingProcessor;
 
     public GooseGame() {
-        inputOutputProcessor = new ConsoleInputOutputProcessor();
+        inputOutputProcessor = new ConsoleInputOutputProcessor(System.in);
         parsingProcessor = new GooseParsingProcessor();
         board = new Board(63);
         board.addGooseSpaces(5, 9, 14, 18, 23, 27);
@@ -43,7 +43,7 @@ public class GooseGame {
         inputOutputProcessor.processStringInput();
     }
 
-    private String executeCommand(GooseCommand command){
+    public String executeCommand(GooseCommand command){
         switch (command.getName()){
             //add a player to the board
             case ADD_PLAYER: {

@@ -1,5 +1,6 @@
 package com.github.dadekuma.goosegame.processing;
 
+import java.io.InputStream;
 import java.util.Scanner;
 
 public class ConsoleInputOutputProcessor implements InputOutputProcessor {
@@ -7,8 +8,8 @@ public class ConsoleInputOutputProcessor implements InputOutputProcessor {
     //from a console based application to say, a real game with graphics :)
     private Scanner scanner;
 
-    public ConsoleInputOutputProcessor() {
-        scanner = new Scanner(System.in);
+    public ConsoleInputOutputProcessor(InputStream inputStream) {
+        scanner = new Scanner(inputStream);
     }
 
     @Override
