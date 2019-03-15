@@ -130,7 +130,8 @@ public class Board {
 
         if(playerPosition > boardSize){
             int delta = playerPosition - boardSize;
-            player.setPosition(boardSize - delta);
+            int newPosition = Math.max(boardSize - delta, 0);
+            player.setPosition(newPosition);
             String newSpace = spaceIntToString(player.getPosition());
             stringBuilder.append(". ").append(playerName).append( " bounces! ");
             stringBuilder.append(playerName).append( " returns to ").append(newSpace);
