@@ -28,9 +28,17 @@ public class GooseCommandTest {
     @Test
     public void commandEqualityTest3() {
         GooseCommand firstCommand = new GooseCommand(EnumCommand.MOVING, EnumParameter.PLY_NAME,"pippo");
-        GooseCommand secondCommand = new GooseCommand(EnumCommand.MOVING, EnumParameter.PLY_NAME,"pippo");
+        String imNotACommand = "";
 
-        Assert.assertEquals(firstCommand, secondCommand);
+        Assert.assertNotEquals(firstCommand, imNotACommand);
+    }
+
+    @Test
+    public void getParameterTest() {
+        GooseCommand command = new GooseCommand(EnumCommand.MOVING, EnumParameter.PLY_NAME,"pippo");
+        String result = command.getValue(EnumParameter.PLY_NAME);
+
+        Assert.assertEquals("pippo", result);
     }
 
     @Test(expected = ParameterNotFoundException.class)

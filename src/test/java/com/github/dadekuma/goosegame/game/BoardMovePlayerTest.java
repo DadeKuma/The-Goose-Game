@@ -1,8 +1,10 @@
 package com.github.dadekuma.goosegame.game;
 
+import com.github.dadekuma.goosegame.processing.exception.PlayerNotFoundException;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 public class BoardMovePlayerTest {
 
@@ -32,6 +34,12 @@ public class BoardMovePlayerTest {
         String expected = "pippo rolls 10, 10, 10. pippo moves from 8 to 38";
 
         Assert.assertEquals(expected, result);
+    }
+
+    @Test(expected = PlayerNotFoundException.class)
+    public void movePlayerError1() {
+        board.addPlayer("pippo");
+        board.movePlayer("pluto", "6, 2");
     }
 
     @Test

@@ -3,7 +3,7 @@ package com.github.dadekuma.goosegame.processing.enums;
 public enum EnumCommand {
     ADD_PLAYER("add player <player_name>"),
     MOVING("move <player_name>"),
-    MOVING_ROLL("move <player_name> <dice>(<, dice>)"),
+    MOVING_ROLL("move <player_name> <die_value>(<, die_value>)"),
     ;
 
     private String name;

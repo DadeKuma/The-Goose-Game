@@ -51,6 +51,30 @@ public class GooseParsingMovePlayerTest {
         Assert.assertEquals(expectedCommand, actualCommand);
     }
 
+    @Test
+    public void moveRollPlayer1() {
+        String input = "move mickey 20";
+        GooseCommand actualCommand = gooseParsingProcessor.parseInput(input);
+
+        GooseCommand expectedCommand = new GooseCommand(EnumCommand.MOVING_ROLL);
+        expectedCommand.addParameter(EnumParameter.PLY_NAME,"mickey")
+                        .addParameter(EnumParameter.ROLLS, "20");
+
+        Assert.assertEquals(expectedCommand, actualCommand);
+    }
+
+    @Test
+    public void moveRollPlayer2() {
+        String input = "move mickey 20, 5, 7";
+        GooseCommand actualCommand = gooseParsingProcessor.parseInput(input);
+
+        GooseCommand expectedCommand = new GooseCommand(EnumCommand.MOVING_ROLL);
+        expectedCommand.addParameter(EnumParameter.PLY_NAME,"mickey")
+                        .addParameter(EnumParameter.ROLLS, "20, 5, 7");
+
+        Assert.assertEquals(expectedCommand, actualCommand);
+    }
+
     @Test(expected = CommandNotFoundException.class)
     public void addPlayerError1(){
         String input = "movepippo";
