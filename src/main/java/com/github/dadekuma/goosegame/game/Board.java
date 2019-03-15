@@ -14,10 +14,10 @@ public class Board {
 
     public String addPlayer(String name){
         Player newPlayer = new Player(name);
+        //player already exists
         if(players.contains(newPlayer)){
             return name + ": already existing player";
         }
-
         players.add(newPlayer);
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("players: ");
@@ -25,17 +25,18 @@ public class Board {
             stringBuilder.append(p.getName());
             stringBuilder.append(", ");
         }
-        //delete last ',' and ' '
-        stringBuilder.delete(stringBuilder.length() - 2,
-                            stringBuilder.length());
-        return stringBuilder.toString();
+        return stringBuilder.substring(0, stringBuilder.length() - 2);
     }
 
-    public String movePlayer(String name, int amount){
-        return "";
+    public String movePlayer(String name, String diceRolls){
+        int oldPosition = 0, newPosition = 0;
+        return name + " rolls " + diceRolls + "." +
+                name + " moves from " + oldPosition + " to " + newPosition;
     }
 
-    private boolean checkWin(String name){
-        return false;
+    public boolean checkWinCondition() { return false;}
+
+    private boolean checkWin(Player player){
+        return player.getPosition() == boardSize;
     }
 }

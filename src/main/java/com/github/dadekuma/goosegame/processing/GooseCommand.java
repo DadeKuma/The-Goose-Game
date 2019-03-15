@@ -1,33 +1,49 @@
 package com.github.dadekuma.goosegame.processing;
 
+import com.github.dadekuma.goosegame.processing.enums.EnumCommand;
+import com.github.dadekuma.goosegame.processing.enums.EnumParameter;
+import com.github.dadekuma.goosegame.processing.exception.ParameterNotFoundException;
+
+import java.util.HashMap;
+import java.util.Map;
+
 public class GooseCommand {
     private EnumCommand name;
-    private Object parameter;
+    private Map<EnumParameter, String> parameters;
 
     public GooseCommand(EnumCommand name) {
-        this(name, null);
+        this(name, new HashMap<>());
     }
 
-    public GooseCommand(EnumCommand name, Object parameter) {
+    public GooseCommand(EnumCommand name, EnumParameter parameterName, String parameterValue) {
+        this(name, new HashMap<>());
+        parameters.put(parameterName, parameterValue);
+    }
+
+    public GooseCommand(EnumCommand name, Map<EnumParameter, String> parameters) {
         this.name = name;
-        this.parameter = parameter;
+        this.parameters = parameters;
     }
 
     public EnumCommand getName() {
         return name;
     }
 
-    public void setName(EnumCommand name) {
-        this.name = name;
+    public Map<EnumParameter, String> getParameters() {
+        return parameters;
     }
 
-    public Object getParameter() {
-        return parameter;
+    public GooseCommand addParameter(EnumParameter name, String value){
+        parameters.put(name, value);
+        return this;
     }
 
-    public void setParameter(Object parameter) {
-        this.parameter = parameter;
+    public String getValue(EnumParameter parameterName){
+        if(!parameters.containsKey(parameterName))
+            throw new ParameterNotFoundException();
+        return parameters.get(parameterName);
     }
+
 
     @Override
     public boolean equals(Object obj) {
@@ -35,6 +51,6 @@ public class GooseCommand {
             return false;
         GooseCommand c = (GooseCommand) obj;
         return c.getName().equals(name) &&
-                c.getParameter().equals(parameter);
+                c.getParameters().equals(parameters);
     }
 }

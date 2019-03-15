@@ -1,9 +1,9 @@
-package com.github.dadekuma.goosegame.processing;
+package com.github.dadekuma.goosegame.processing.enums;
 
 public enum EnumCommand {
     MOVING("move"),
     MOVING_ROLL("moveRoll"),
-    ADD_PLAYER("add")
+    ADD_PLAYER("addPlayer")
     ;
 
     private String name;
