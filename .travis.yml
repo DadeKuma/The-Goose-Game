@@ -1,5 +1,11 @@
+$CODECOV_TOKEN: 56892054-0846-47ef-828c-47566e28373f
+
 language: java
 jdk: oraclejdk8
 install: true
+
 script:
-- mvn install
+  - mvn install
+
+after_success:
+        - bash <(curl -s https://codecov.io/bash) -t $CODECOV_TOKEN
