@@ -4,6 +4,4 @@ install: true
 
 script:
   - mvn install
-
-after_success:
-        - bash <(curl -s https://codecov.io/bash) -t 56892054-0846-47ef-828c-47566e28373f
+  - codecov
