@@ -81,8 +81,10 @@ public class Board {
         int newBoardPosition = oldBoardPosition + diceRollsSum(diceRolls);
         player.setPosition(newBoardPosition);
 
+        int limitedNewBoardPosition = newBoardPosition > boardSize ? boardSize : newBoardPosition;
+
         String oldSpace = spaceIntToString(oldBoardPosition);
-        String newSpace = spaceIntToString(newBoardPosition);
+        String newSpace = spaceIntToString(limitedNewBoardPosition);
 
         stringBuilder.append(playerName).append(" rolls ").append(diceRolls).append(". ");
         stringBuilder.append(playerName).append(" moves from ").append(oldSpace)

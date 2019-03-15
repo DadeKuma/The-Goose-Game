@@ -10,7 +10,7 @@ public class BoardMovePlayerTest {
 
     @Before
     public void Init(){
-        board = new Board(64);
+        board = new Board(63);
     }
 
     @Test
@@ -97,7 +97,7 @@ public class BoardMovePlayerTest {
 
         board.movePlayer("pippo", "60");
         String result = board.movePlayer("pippo", "3, 5");
-        String expected = "pippo rolls 3, 5. pippo moves from 60 to 68. pippo bounces! pippo returns to 60";
+        String expected = "pippo rolls 3, 5. pippo moves from 60 to 63. pippo bounces! pippo returns to 58";
 
         Assert.assertEquals(expected, result);
     }

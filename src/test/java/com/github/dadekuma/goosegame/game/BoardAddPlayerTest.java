@@ -10,7 +10,7 @@ public class BoardAddPlayerTest {
 
     @Before
     public void Init(){
-        board = new Board(64);
+        board = new Board(63);
     }
 
     @Test
