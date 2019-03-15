@@ -1,5 +1,6 @@
 # The-Goose-Game
 [![Build Status](https://travis-ci.com/DadeKuma/The-Goose-Game.svg?branch=master)](https://travis-ci.com/DadeKuma/The-Goose-Game)
+
 A simple text game inspired by the classic board game 'The Goose'
 
 ## How to install
