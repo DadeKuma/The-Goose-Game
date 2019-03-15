@@ -9,7 +9,7 @@ public class Board {
     private Collection<Player> players;
     private List<Integer> gooseSpaces;
     private Map<Integer, String> specialSpaceNames;
-    private int bridgeSpace = 6;
+    private int bridgeSpace = -1;
     private boolean isGameFinished;
 
     public Board(int boardSize) {
@@ -18,14 +18,18 @@ public class Board {
         gooseSpaces = new LinkedList<>();
         specialSpaceNames = new HashMap<>();
         specialSpaceNames.put(0, "Start");
-        specialSpaceNames.put(bridgeSpace, "The Bridge");
     }
 
-    public Board addGooseSpaces(int...cells){
+    public void addGooseSpaces(int...cells){
         for(Integer cell : cells){
             gooseSpaces.add(cell);
         }
-        return this;
+    }
+
+    public void addBridge(int bridgeSpace){
+        specialSpaceNames.remove(this.bridgeSpace);
+        this.bridgeSpace = bridgeSpace;
+        specialSpaceNames.put(bridgeSpace, "The Bridge");
     }
 
     public boolean isGameFinished() { return isGameFinished;}
@@ -105,7 +109,7 @@ public class Board {
 
     private StringBuilder checkGoose(StringBuilder stringBuilder, Player player, String diceRolls){
         int playerPosition = player.getPosition();
-        //not a goose space so we get out
+        //not a goose mechanic so we get out
         if(!gooseSpaces.contains(playerPosition))
             return stringBuilder;
 
@@ -114,7 +118,7 @@ public class Board {
         player.setPosition(playerPosition + diceResult);
         String newSpace = spaceIntToString(player.getPosition());
 
-        stringBuilder.append(", the Goose. ").append(playerName).append(" moves again ")
+        stringBuilder.append(", The Goose. ").append(playerName).append(" moves again ")
                      .append("and goes to ").append(newSpace);
 
         return checkGoose(stringBuilder, player, diceRolls);
@@ -136,7 +140,6 @@ public class Board {
 
     private StringBuilder checkPrank(StringBuilder stringBuilder, Player player, int oldPosition){
         int playerPosition = player.getPosition();
-        String playerName = player.getName();
         for(Player p : players){
             //there is a player p where player landed
             if(p != player && p.getPosition() == playerPosition){

@@ -36,6 +36,7 @@ public class BoardMovePlayerTest {
 
     @Test
     public void movePlayerBridge() {
+        board.addBridge(6);
         board.addPlayer("pippo");
 
         String result = board.movePlayer("pippo", "6");
@@ -50,7 +51,7 @@ public class BoardMovePlayerTest {
         board.addPlayer("pippo");
 
         String result = board.movePlayer("pippo", "10");
-        String expected = "pippo rolls 10. pippo moves from Start to 10, the Goose. pippo moves again and goes to 20";
+        String expected = "pippo rolls 10. pippo moves from Start to 10, The Goose. pippo moves again and goes to 20";
 
         Assert.assertEquals(expected, result);
     }
@@ -61,7 +62,7 @@ public class BoardMovePlayerTest {
         board.addPlayer("pippo");
 
         String result = board.movePlayer("pippo", "3, 3, 3, 1");
-        String expected = "pippo rolls 3, 3, 3, 1. pippo moves from Start to 10, the Goose. pippo moves again and goes to 20";
+        String expected = "pippo rolls 3, 3, 3, 1. pippo moves from Start to 10, The Goose. pippo moves again and goes to 20";
 
         Assert.assertEquals(expected, result);
     }
@@ -72,8 +73,8 @@ public class BoardMovePlayerTest {
         board.addPlayer("pippo");
 
         String result = board.movePlayer("pippo", "10");
-        String expected = "pippo rolls 10. pippo moves from Start to 10, the Goose. "
-        + "pippo moves again and goes to 20, the Goose. pippo moves again and goes to 30";
+        String expected = "pippo rolls 10. pippo moves from Start to 10, The Goose. "
+        + "pippo moves again and goes to 20, The Goose. pippo moves again and goes to 30";
 
         Assert.assertEquals(expected, result);
     }
@@ -84,9 +85,9 @@ public class BoardMovePlayerTest {
         board.addPlayer("pippo");
 
         String result = board.movePlayer("pippo", "10");
-        String expected = "pippo rolls 10. pippo moves from Start to 10, the Goose. "
-                + "pippo moves again and goes to 20, the Goose. "
-                + "pippo moves again and goes to 30, the Goose. pippo moves again and goes to 40";
+        String expected = "pippo rolls 10. pippo moves from Start to 10, The Goose. "
+                + "pippo moves again and goes to 20, The Goose. "
+                + "pippo moves again and goes to 30, The Goose. pippo moves again and goes to 40";
 
         Assert.assertEquals(expected, result);
     }

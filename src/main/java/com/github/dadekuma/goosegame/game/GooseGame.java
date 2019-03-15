@@ -8,7 +8,7 @@ import com.github.dadekuma.goosegame.processing.exception.PlayerNotFoundExceptio
 
 public class GooseGame {
     private Board board;
-    private Dice dice;
+    private Die die;
     private int diceNumber;
     private InputOutputProcessor inputOutputProcessor;
     private ParsingProcessor parsingProcessor;
@@ -18,7 +18,8 @@ public class GooseGame {
         parsingProcessor = new GooseParsingProcessor();
         board = new Board(63);
         board.addGooseSpaces(5, 9, 14, 18, 23, 27);
-        dice = new Dice(6);
+        board.addBridge(6);
+        die = new Die(6);
         diceNumber = 2;
     }
 
@@ -54,14 +55,14 @@ public class GooseGame {
                 String playerName = command.getValue(EnumParameter.PLY_NAME);
                 StringBuilder stringBuilder = new StringBuilder();
                 for(int i = 0; i < diceNumber; ++i){
-                    int diceResult = dice.roll();
+                    int diceResult = die.roll();
                     stringBuilder.append(diceResult);
                     stringBuilder.append(", ");
                 }
                 String diceRolls = stringBuilder.substring(0, stringBuilder.length() - 2);
                 return board.movePlayer(playerName, diceRolls);
             }
-            //player tells explicitly his dice result then moves
+            //player tells explicitly his die result then moves
             case MOVING_ROLL: {
                 String playerName = command.getValue(EnumParameter.PLY_NAME);
                 String diceRolls = command.getValue(EnumParameter.ROLLS);
