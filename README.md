@@ -1,5 +1,6 @@
 # The-Goose-Game
 [![Build Status](https://travis-ci.com/DadeKuma/The-Goose-Game.svg?branch=master)](https://travis-ci.com/DadeKuma/The-Goose-Game)
+[![codecov](https://codecov.io/gh/DadeKuma/The-Goose-Game/branch/master/graph/badge.svg)](https://codecov.io/gh/DadeKuma/The-Goose-Game)
 
 A simple text game inspired by the classic board game 'The Goose'
 
@@ -14,4 +15,4 @@ git clone https://github.com/DadeKuma/The-Goose-Game
 .../The Goose Game/pom.xml
 ```
 
-#### 3. Compile and run the project
+#### 3. Compile and run the project!
