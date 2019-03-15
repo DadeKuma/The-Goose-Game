@@ -10,7 +10,7 @@ import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
 @RunWith(JUnit4.class)
-public class GooseParsingProcessorTest {
+public class GooseParsingMovePlayerTest {
     private  GooseParsingProcessor gooseParsingProcessor;
 
     @Before
@@ -19,71 +19,53 @@ public class GooseParsingProcessorTest {
     }
 
     @Test
-    public void addPlayer1() {
-        String input = "add player pippo";
+    public void movePlayer1() {
+        String input = "move pippo";
         GooseCommand actualCommand = gooseParsingProcessor.parseInput(input);
 
         GooseCommand expectedCommand = new GooseCommand(
-                EnumCommand.ADD_PLAYER, EnumParameter.PLY_NAME,"pippo");
+                EnumCommand.MOVING, EnumParameter.PLY_NAME,"pippo");
 
         Assert.assertEquals(expectedCommand, actualCommand);
     }
 
     @Test
-    public void addPlayer2() {
-        String input = "add player mickey mouse";
+    public void movePlayer2() {
+        String input = "move mickey mouse";
         GooseCommand actualCommand = gooseParsingProcessor.parseInput(input);
 
         GooseCommand expectedCommand = new GooseCommand(
-                EnumCommand.ADD_PLAYER, EnumParameter.PLY_NAME,"mickey mouse");
+                EnumCommand.MOVING, EnumParameter.PLY_NAME,"mickey mouse");
 
         Assert.assertEquals(expectedCommand, actualCommand);
     }
 
     @Test
-    public void addPlayer3() {
-        String input = "add player pluto273";
+    public void movePlayer3() {
+        String input = "move mickey 20 mouse";
         GooseCommand actualCommand = gooseParsingProcessor.parseInput(input);
 
         GooseCommand expectedCommand = new GooseCommand(
-                EnumCommand.ADD_PLAYER, EnumParameter.PLY_NAME,"pluto273");
+                EnumCommand.MOVING, EnumParameter.PLY_NAME,"mickey 20 mouse");
 
         Assert.assertEquals(expectedCommand, actualCommand);
     }
 
     @Test(expected = CommandNotFoundException.class)
     public void addPlayerError1(){
-        String input = "add player";
+        String input = "movepippo";
         gooseParsingProcessor.parseInput(input);
     }
 
     @Test(expected = CommandNotFoundException.class)
     public void addPlayerError2(){
-        String input = "ad d player pippo";
+        String input = " move pippo";
         gooseParsingProcessor.parseInput(input);
     }
 
     @Test(expected = CommandNotFoundException.class)
     public void addPlayerError3(){
-        String input = "player add pippo";
-        gooseParsingProcessor.parseInput(input);
-    }
-
-    @Test(expected = CommandNotFoundException.class)
-    public void addPlayerError4(){
-        String input = "add player";
-        gooseParsingProcessor.parseInput(input);
-    }
-
-    @Test(expected = CommandNotFoundException.class)
-    public void addPlayerError5(){
-        String input = "add playerpippo";
-        gooseParsingProcessor.parseInput(input);
-    }
-
-    @Test(expected = CommandNotFoundException.class)
-    public void addPlayerError6(){
-        String input = "addplayer pippo";
+        String input = "mo ve pippo";
         gooseParsingProcessor.parseInput(input);
     }
 }

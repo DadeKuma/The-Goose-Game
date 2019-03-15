@@ -2,12 +2,12 @@ package com.github.dadekuma.goosegame.processing;
 
 import java.util.Scanner;
 
-public class ConsoleInputProcessor implements InputProcessor {
+public class ConsoleInputOutputProcessor implements InputOutputProcessor {
     //without an interface it would be difficult to refactor the game
     //from a console based application to say, a real game with graphics :)
     private Scanner scanner;
 
-    public ConsoleInputProcessor() {
+    public ConsoleInputOutputProcessor() {
         scanner = new Scanner(System.in);
     }
 

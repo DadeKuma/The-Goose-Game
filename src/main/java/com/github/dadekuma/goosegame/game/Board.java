@@ -1,5 +1,7 @@
 package com.github.dadekuma.goosegame.game;
 
+import com.github.dadekuma.goosegame.processing.exception.PlayerNotFoundException;
+
 import java.util.Collection;
 import java.util.LinkedList;
 
@@ -11,6 +13,8 @@ public class Board {
         this.boardSize = boardSize;
         players = new LinkedList<>();
     }
+
+    public boolean isGameFinished() { return false;}
 
     public String addPlayer(String name){
         Player newPlayer = new Player(name);
@@ -29,14 +33,65 @@ public class Board {
     }
 
     public String movePlayer(String name, String diceRolls){
-        int oldPosition = 0, newPosition = 0;
-        return name + " rolls " + diceRolls + "." +
-                name + " moves from " + oldPosition + " to " + newPosition;
+        Player player = null;
+        //get the player from the collection
+        for(Player p : players){
+            if(p.getName().equals(name)){
+                player = p;
+                break;
+            }
+        }
+        if(player == null)
+            throw new PlayerNotFoundException();
+
+        //position before throwing dices
+        int oldPosition = player.getPosition();
+        //sum of every dice result
+        int diceResult = diceRollsSum(diceRolls);
+        //position after throwing dices
+        player.setPosition(oldPosition + diceResult);
+
+        StringBuilder stringBuilder = new StringBuilder();
+
+        stringBuilder.append(name).append(" rolls ").append(diceRolls).append(". ");
+        stringBuilder.append(name).append(" moves from ")
+                .append(oldPosition).append(" to ").append(player.getPosition()).append(". ");
+
+        //here we have the bouncing mechanic.
+        checkBouncing(stringBuilder, player);
+        //and finally the win condition.
+        checkWin(stringBuilder, player);
+        return stringBuilder.toString();
     }
 
-    public boolean checkWinCondition() { return false;}
+    private StringBuilder checkBouncing(StringBuilder stringBuilder, Player player){
+        int playerPosition = player.getPosition();
+        String playerName = player.getName();
 
-    private boolean checkWin(Player player){
-        return player.getPosition() == boardSize;
+        if(playerPosition > boardSize){
+            int delta = playerPosition - boardSize;
+            player.setPosition(boardSize - delta);
+            stringBuilder.append(playerName).append( " bounces! ");
+            stringBuilder.append(playerName).append( " returns to ").append(player.getPosition());
+        }
+        return stringBuilder;
+    }
+
+    private StringBuilder checkWin(StringBuilder stringBuilder, Player player){
+        int playerPosition = player.getPosition();
+        String playerName = player.getName();
+        if(playerPosition == boardSize){
+            stringBuilder.append(playerName).append( " Wins!!");
+        }
+        return stringBuilder;
+    }
+
+    private int diceRollsSum(String diceRolls){
+        String[] dices = diceRolls.split(", ");
+        int result = 0;
+        for(String dice : dices){
+            result += Integer.valueOf(dice);
+        }
+        return result;
     }
 }

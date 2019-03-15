@@ -8,12 +8,12 @@ public class GooseGame {
     private Board board;
     private Dice dice;
     private int diceNumber;
-    private InputProcessor inputProcessor;
+    private InputOutputProcessor InputOutputProcessor;
     private ParsingProcessor parsingProcessor;
     private boolean isGameFinished;
 
     public GooseGame() {
-        inputProcessor = new ConsoleInputProcessor();
+        InputOutputProcessor = new ConsoleInputOutputProcessor();
         parsingProcessor = new GooseParsingProcessor();
         board = new Board(63);
         dice = new Dice(6);
@@ -23,10 +23,10 @@ public class GooseGame {
     //called to start the game, contains the game loop
     public void start(){
         while (!isGameFinished){
-            String lastInput = inputProcessor.processStringInput();
+            String lastInput = InputOutputProcessor.processStringInput();
             GooseCommand command = parsingProcessor.parseInput(lastInput);
             String result = executeCommand(command);
-            inputProcessor.processOutput(result);
+            InputOutputProcessor.processOutput(result);
         }
     }
 

@@ -1,6 +1,6 @@
 package com.github.dadekuma.goosegame.processing;
 
-public interface InputProcessor {
+public interface InputOutputProcessor {
     String processStringInput();
     int processIntInput();
     void processOutput(String output);

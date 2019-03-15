@@ -15,7 +15,6 @@ public class Dice {
         random = new Random(seed);
     }
 
-    //dices don't have a 'zero' value :)
     public int roll(){
         return 1 + random.nextInt(sides);
     }
