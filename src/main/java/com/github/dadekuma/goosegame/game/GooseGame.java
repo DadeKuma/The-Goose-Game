@@ -18,7 +18,6 @@ public class GooseGame {
         parsingProcessor = new GooseParsingProcessor();
         board = new Board(63);
         board.addGooseSpaces(5, 9, 14, 18, 23, 27);
-        board.setBridgeSpace(6);
         dice = new Dice(6);
         diceNumber = 2;
     }

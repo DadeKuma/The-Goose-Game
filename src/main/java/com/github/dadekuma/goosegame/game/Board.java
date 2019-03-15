@@ -2,32 +2,29 @@ package com.github.dadekuma.goosegame.game;
 
 import com.github.dadekuma.goosegame.processing.exception.PlayerNotFoundException;
 
-import java.util.Collection;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 public class Board {
     private int boardSize;
     private Collection<Player> players;
     private List<Integer> gooseSpaces;
-    private int bridgeSpace;
+    private Map<Integer, String> specialSpaceNames;
+    private int bridgeSpace = 12;
     private boolean isGameFinished;
 
     public Board(int boardSize) {
         this.boardSize = boardSize;
         players = new LinkedList<>();
         gooseSpaces = new LinkedList<>();
+        specialSpaceNames = new HashMap<>();
+        specialSpaceNames.put(0, "Start");
+        specialSpaceNames.put(bridgeSpace, "The Bridge");
     }
 
     public Board addGooseSpaces(int...cells){
         for(Integer cell : cells){
             gooseSpaces.add(cell);
         }
-        return this;
-    }
-
-    public Board setBridgeSpace(int cell){
-        bridgeSpace = cell;
         return this;
     }
 
@@ -64,7 +61,7 @@ public class Board {
         int oldPosition = player.getPosition();
         //we move the player.
         checkMovement(stringBuilder, player, diceRolls);
-        //then we check the goose mechanic
+        //then we check the bridge mechanic
         checkBridge(stringBuilder, player);
         //...the goose mechanic
         checkGoose(stringBuilder, player, diceRolls);
@@ -79,24 +76,27 @@ public class Board {
 
     private StringBuilder checkMovement(StringBuilder stringBuilder, Player player, String diceRolls){
         String playerName = player.getName();
-        //position before throwing dices
-        int oldPosition = player.getPosition();
-        //sum of every dice result
-        int diceResult = diceRollsSum(diceRolls);
-        //position after throwing dices
-        player.setPosition(oldPosition + diceResult);
+
+        int oldBoardPosition = player.getPosition();
+        int newBoardPosition = oldBoardPosition + diceRollsSum(diceRolls);
+        player.setPosition(newBoardPosition);
+
+        String oldSpace = spaceIntToString(oldBoardPosition);
+        String newSpace = spaceIntToString(newBoardPosition);
+
         stringBuilder.append(playerName).append(" rolls ").append(diceRolls).append(". ");
-        stringBuilder.append(playerName).append(" moves from ").append(oldPosition)
-                     .append(" to ").append(player.getPosition());
+        stringBuilder.append(playerName).append(" moves from ").append(oldSpace)
+                     .append(" to ").append(newSpace);
         return stringBuilder;
     }
 
     private StringBuilder checkBridge(StringBuilder stringBuilder, Player player){
         String playerName = player.getName();
-        int playerPosition = player.getPosition();
-        if(playerPosition == bridgeSpace){
+
+        if(player.getPosition() == bridgeSpace){
             player.setPosition(12);
-            stringBuilder.append(". ").append(playerName).append(" jumps to ").append(player.getPosition());
+            String newSpace = spaceIntToString(player.getPosition());
+            stringBuilder.append(". ").append(playerName).append(" jumps to ").append(newSpace);
         }
         return stringBuilder;
     }
@@ -110,9 +110,10 @@ public class Board {
         String playerName = player.getName();
         int diceResult = diceRollsSum(diceRolls);
         player.setPosition(playerPosition + diceResult);
+        String newSpace = spaceIntToString(player.getPosition());
 
         stringBuilder.append(", the Goose. ").append(playerName).append(" moves again ")
-                     .append("and goes to ").append(player.getPosition());
+                     .append("and goes to ").append(newSpace);
 
         return checkGoose(stringBuilder, player, diceRolls);
     }
@@ -124,13 +125,27 @@ public class Board {
         if(playerPosition > boardSize){
             int delta = playerPosition - boardSize;
             player.setPosition(boardSize - delta);
+            String newSpace = spaceIntToString(player.getPosition());
             stringBuilder.append(". ").append(playerName).append( " bounces! ");
-            stringBuilder.append(playerName).append( " returns to ").append(player.getPosition());
+            stringBuilder.append(playerName).append( " returns to ").append(newSpace);
         }
         return stringBuilder;
     }
 
     private StringBuilder checkPrank(StringBuilder stringBuilder, Player player, int oldPosition){
+        int playerPosition = player.getPosition();
+        String playerName = player.getName();
+        for(Player p : players){
+            //there is a player p where player landed
+            if(p != player && p.getPosition() == playerPosition){
+                p.setPosition(oldPosition);
+                String newSpace = spaceIntToString(player.getPosition());
+                String prankSpace = spaceIntToString(p.getPosition());
+                stringBuilder.append(". On ").append(newSpace).append(" there is ").append(p.getName())
+                             .append(", who returns to ").append(prankSpace);
+                break;
+            }
+        }
         return stringBuilder;
     }
 
@@ -142,6 +157,12 @@ public class Board {
             isGameFinished = true;
         }
         return stringBuilder;
+    }
+
+    private String spaceIntToString(int space){
+        if(specialSpaceNames.containsKey(space))
+            return specialSpaceNames.get(space);
+        return String.valueOf(space);
     }
 
     //utility function used to get dice string values as a single int
