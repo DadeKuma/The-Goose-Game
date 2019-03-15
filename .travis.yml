@@ -1,7 +1,8 @@
 language: java
 jdk: oraclejdk8
-install: true
+sudo: false
 
 script:
-  - mvn cobertura:cobertura
+  - mvn package
+after_success:
   - bash <(curl -s https://codecov.io/bash)
