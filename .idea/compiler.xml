@@ -16,11 +16,11 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="The Goose Game" />
+        <module name="the-goose-game" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="The Goose Game" target="1.8" />
+      <module name="the-goose-game" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>

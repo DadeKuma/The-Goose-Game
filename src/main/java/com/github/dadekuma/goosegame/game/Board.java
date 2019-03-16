@@ -109,7 +109,7 @@ public class Board {
 
     private StringBuilder checkGoose(StringBuilder stringBuilder, Player player, String diceRolls){
         int playerPosition = player.getPosition();
-        //not a goose mechanic so we get out
+        //not a goose space so we get out
         if(!gooseSpaces.contains(playerPosition))
             return stringBuilder;
 

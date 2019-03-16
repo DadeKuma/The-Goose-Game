@@ -42,11 +42,22 @@ public class GooseParsingAddPlayerTest {
 
     @Test
     public void addPlayer3() {
-        String input = "add player pluto273";
+        String input = "add player pluto 273 pluto";
         GooseCommand actualCommand = gooseParsingProcessor.parseInput(input);
 
         GooseCommand expectedCommand = new GooseCommand(
-                EnumCommand.ADD_PLAYER, EnumParameter.PLY_NAME,"pluto273");
+                EnumCommand.ADD_PLAYER, EnumParameter.PLY_NAME,"pluto 273 pluto");
+
+        Assert.assertEquals(expectedCommand, actualCommand);
+    }
+
+    @Test
+    public void addPlayer4() {
+        String input = "add player 12, 20, 3 pluto 273 pluto";
+        GooseCommand actualCommand = gooseParsingProcessor.parseInput(input);
+
+        GooseCommand expectedCommand = new GooseCommand(
+                EnumCommand.ADD_PLAYER, EnumParameter.PLY_NAME,"12, 20, 3 pluto 273 pluto");
 
         Assert.assertEquals(expectedCommand, actualCommand);
     }
@@ -84,6 +95,12 @@ public class GooseParsingAddPlayerTest {
     @Test(expected = CommandNotFoundException.class)
     public void addPlayerError6(){
         String input = "addplayer pippo";
+        gooseParsingProcessor.parseInput(input);
+    }
+
+    @Test(expected = CommandNotFoundException.class)
+    public void addPlayerError7(){
+        String input = "add player pluto273";
         gooseParsingProcessor.parseInput(input);
     }
 }

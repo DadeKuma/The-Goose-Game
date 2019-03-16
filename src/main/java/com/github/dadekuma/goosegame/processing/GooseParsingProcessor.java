@@ -14,13 +14,13 @@ public class GooseParsingProcessor implements ParsingProcessor {
     //is to just use regular expressions
 
     public GooseCommand parseInput(String input){
-        //must start with 'add player'
-        if(input.matches("^add player\\s.+")){
+        //must start with 'add player', whitespace, any character. end with a non digit
+        if(input.matches("^add player\\s.*\\D$")){
             return addPlayer(input);
         }
-        //in 'human' language: start with 'move', whitespace, then any character; end with a digit.
+        //in 'human' language: start with 'move', whitespace, then any character; end with a digit
         //then there can be 0-infinite times ', digit'.
-        if(input.matches("^move\\s.+\\s[0-9]+(,\\s[0-9]+)*")){
+        if(input.matches("^move\\s.+\\s[0-9]+(,\\s[0-9]+)*$")){
             return movePlayer(input, true);
         }
         //same thing as above but only check for name
@@ -49,7 +49,7 @@ public class GooseParsingProcessor implements ParsingProcessor {
             return new GooseCommand(EnumCommand.MOVING, parameters);
         }
         //if he did, then we extract only the digits from input
-        Pattern pattern = Pattern.compile("[0-9]+(,\\s[0-9]+)*");
+        Pattern pattern = Pattern.compile("[0-9]+(,\\s[0-9]+)*$");
         Matcher matcher = pattern.matcher(input);
         StringBuilder stringBuilder = new StringBuilder();
         while (matcher.find()){

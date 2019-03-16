@@ -26,21 +26,23 @@ public class GooseGame {
     //called to start the game, contains the game loop
     public void start(){
         while (!board.isGameFinished()){
-            try {
-                String lastInput = inputOutputProcessor.processStringInput();
-                GooseCommand command = parsingProcessor.parseInput(lastInput);
-                String result = executeCommand(command);
-                inputOutputProcessor.processOutput(result);
-            } catch (PlayerNotFoundException |
-                     CommandNotFoundException |
-                     ParameterNotFoundException e){
-                inputOutputProcessor.processOutput(e.getMessage());
-            } catch (RuntimeException e){
-                e.fillInStackTrace();
-            }
+            update();
         }
         inputOutputProcessor.processOutput("Thank you for playing.");
         inputOutputProcessor.processStringInput();
+    }
+
+    protected void update(){
+        try {
+            String lastInput = inputOutputProcessor.processStringInput();
+            GooseCommand command = parsingProcessor.parseInput(lastInput);
+            String result = executeCommand(command);
+            inputOutputProcessor.processOutput(result);
+        } catch (PlayerNotFoundException |
+                CommandNotFoundException |
+                ParameterNotFoundException e){
+            inputOutputProcessor.processOutput(e.getMessage());
+        }
     }
 
     public String executeCommand(GooseCommand command){

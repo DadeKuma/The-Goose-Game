@@ -1,6 +1,7 @@
 package com.github.dadekuma.goosegame.game;
 
 import com.github.dadekuma.goosegame.processing.GooseCommand;
+import com.github.dadekuma.goosegame.processing.InputOutputProcessor;
 import com.github.dadekuma.goosegame.processing.enums.EnumCommand;
 import com.github.dadekuma.goosegame.processing.enums.EnumParameter;
 import org.junit.Assert;
@@ -17,6 +18,8 @@ import org.mockito.junit.MockitoJUnitRunner;
 public class GooseGameTest {
     @Mock
     private Die die;
+    @Mock
+    private InputOutputProcessor inputOutputProcessor;
     @InjectMocks
     private GooseGame mockedGooseGame;
 
@@ -63,5 +66,22 @@ public class GooseGameTest {
         mockedGooseGame.executeCommand(command1);
         String result = mockedGooseGame.executeCommand(command2);
         Assert.assertEquals("Pippo rolls 2, 2. Pippo moves from Start to 4", result);
+    }
+
+    @Test
+    public void gameGameLoopTest1(){
+        Mockito.when(inputOutputProcessor.processStringInput())
+                .thenReturn("add player Pippo");
+        mockedGooseGame.update();
+    }
+
+    @Test
+    public void gameGameLoopTest2(){
+        Mockito.when(inputOutputProcessor.processStringInput())
+                .thenReturn("add player Pippo");
+        mockedGooseGame.update();
+        Mockito.when(inputOutputProcessor.processStringInput())
+                .thenReturn("move player Pluto");
+        mockedGooseGame.update();
     }
 }
