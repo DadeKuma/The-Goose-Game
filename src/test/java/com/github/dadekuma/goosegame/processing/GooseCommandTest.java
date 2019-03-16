@@ -34,6 +34,32 @@ public class GooseCommandTest {
     }
 
     @Test
+    public void commandEqualityTest4() {
+        GooseCommand firstCommand = new GooseCommand(EnumCommand.MOVING_ROLL);
+        firstCommand.addParameter(EnumParameter.PLY_NAME, "Pippo")
+                    .addParameter(EnumParameter.ROLLS, "5, 2, 1");
+
+        GooseCommand secondCommand = new GooseCommand(EnumCommand.MOVING_ROLL);
+        secondCommand.addParameter(EnumParameter.PLY_NAME, "Pippo")
+                     .addParameter(EnumParameter.ROLLS, "5, 2, 1");
+
+        Assert.assertEquals(firstCommand, secondCommand);
+    }
+
+    @Test
+    public void commandEqualityTest5() {
+        GooseCommand firstCommand = new GooseCommand(EnumCommand.MOVING_ROLL);
+        firstCommand.addParameter(EnumParameter.PLY_NAME, "Pippo")
+                    .addParameter(EnumParameter.ROLLS, "5, 2, 1");
+
+        GooseCommand secondCommand = new GooseCommand(EnumCommand.MOVING_ROLL);
+        secondCommand.addParameter(EnumParameter.PLY_NAME, "Pippo")
+                     .addParameter(EnumParameter.ROLLS, "3");
+
+        Assert.assertNotEquals(firstCommand, secondCommand);
+    }
+
+    @Test
     public void getParameterTest() {
         GooseCommand command = new GooseCommand(EnumCommand.MOVING, EnumParameter.PLY_NAME,"pippo");
         String result = command.getValue(EnumParameter.PLY_NAME);

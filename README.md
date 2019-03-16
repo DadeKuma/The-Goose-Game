@@ -10,9 +10,15 @@ A simple text game inspired by the classic board game 'The Goose'.
 git clone https://github.com/DadeKuma/The-Goose-Game
 ```
 
-#### 2. Using your favourite IDE, go to the project directory and open pom.xml
+#### 2. Build with IDE
+##### Intellij
 ```
-.../The Goose Game/pom.xml
+Open > .../The-Goose-Game/pom.xml
+```
+
+##### Eclipse
+```
+File > Open Projects from File System... > Directory > ../The-Goose-Game
 ```
 
 #### 3. Compile and run the project!

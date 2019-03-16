@@ -25,6 +25,7 @@ public class GooseGame {
 
     //called to start the game, contains the game loop
     public void start(){
+        inputOutputProcessor.processOutput("Welcome to The Goose Game! Please enter a command.");
         while (!board.isGameFinished()){
             update();
         }

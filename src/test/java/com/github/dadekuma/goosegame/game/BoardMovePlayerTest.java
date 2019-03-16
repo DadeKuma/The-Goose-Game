@@ -121,4 +121,15 @@ public class BoardMovePlayerTest {
 
         Assert.assertEquals(expected, result);
     }
+
+    @Test
+    public void movePlayerWin(){
+        board.addPlayer("pippo");
+
+        String result = board.movePlayer("pippo", "63");
+        String expected = "pippo rolls 63. pippo moves from Start to 63. pippo Wins!!";
+
+        Assert.assertEquals(expected, result);
+        Assert.assertTrue(board.isGameFinished());
+    }
 }

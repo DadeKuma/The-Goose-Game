@@ -23,7 +23,8 @@ public class ConsoleInputOutputProcessor implements InputOutputProcessor {
     }
 
     @Override
-    public void processOutput(String output) {
+    public boolean processOutput(String output) {
         System.out.println(output);
+        return true;
     }
 }
